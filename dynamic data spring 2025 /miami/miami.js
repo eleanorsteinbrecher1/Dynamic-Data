@@ -11,9 +11,11 @@ app.set('view engine', 'handlebars');
 // To set the port execute: port=8080 node miami  
 const port = process.env.port || 3000
 //Create some routes
+const navigation = require('./data/navigation.json');
+
 app.get('/', (request,response)=>{
     response.type("text/html")
-    response.render("home",{title:"Miami Travel Site"})
+    response.render("home",{title:"Miami Travel Site", nav , navigation})
 })
 
 app.get('/beaches', (request,response)=>{
@@ -46,16 +48,17 @@ app.use((request,response) => {
     response.send("404 not found")
 })
 //Server Error
-app.use ( (error, request,response,next)=>{
-    console.log(error)
-    response.type("text/html")
-    response.status(500)
-    response.send("500 server error") 
-})
+app.use((error, request, response, next) => {
+    console.error("Error:", error); // Logs the actual error to the terminal
+    response.type("text/html");
+    response.status(500);
+    response.send("500 server error");
+});
+
 
 //start the server
 app.listen(port, ()=> {
-    console.log(`Express is running on http://localhost:${port};`)
+    console.log(`Express is running on http://localhost:${port}`);
     console.log(` press Ctrl-C to terminate.`)
     })
     
