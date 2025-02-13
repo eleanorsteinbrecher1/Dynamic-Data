@@ -20,6 +20,14 @@
         {
             "text": "About",
             "href": "/about"
+        },
+        {
+            "text": "Newsletter Signup",
+            "href": "/newsletter-signup"
+        },
+        {
+            "text": "Newsletter List",
+            "href": "/newsletter/list"
         }
     ]
 }

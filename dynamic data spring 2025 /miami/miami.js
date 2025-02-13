@@ -1,12 +1,18 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const handler = require('./lib/handler');
+
 
 const handlebars = require('express-handlebars');
 app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
 
-const port = process.env.port || 3000;
-const navigation = require('./data/navigation.json');
+const port = process.env.port || 3000 
+const navigation = require('./data/navigation.json'); 
 
 
 app.get('/', (request, response) => {
@@ -41,6 +47,13 @@ app.use((request, response) => {
     response.status(404);
     response.send("404 not found");
 });
+
+app.get('/basic',(req,res)=>{
+    res.render('page',{req})
+ })
+ 
+ app.get('/newsletter-signup', handler.newsletterSignup)
+ app.post('/newsletter-signup/process', handler.newsletterSignup)
 
 app.use((error, request, response, next) => {
     console.error("Error:", error);
